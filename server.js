@@ -26,16 +26,31 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// CORS Configuration
+// ----- CORS Configuration -----
+const allowedOrigins = [
+  'https://admin.cabnm.co.in',
+  'http://localhost:3000',
+  'http://localhost:5500',
+];
+
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL || 'http://localhost:5500'],  // Use env FRONTEND_URL or localhost fallback
-  methods: 'GET,POST,PUT,DELETE',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like curl or mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));  // enable pre-flight requests for all routes
 
-// Session middleware config - use secret from env
+// ----- Session middleware config - use secret from env -----
 app.use(session({
   secret: process.env.SESSION_SECRET || 'default-secret',
   resave: false,
