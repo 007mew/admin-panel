@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-  const API_URL = 'https://your-backend-url.onrender.com';  // 🔁 Replace with your Render URL
+  const API_URL = 'https://cabnm-backend.onrender.com';  // 🔁 Replace with your Render URL
 
   fetch(`${API_URL}/api/articles`)
     .then(res => res.json())
@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function deleteArticle(id) {
-  const API_URL = 'https://your-backend-url.onrender.com';  // 🔁 Replace with your Render URL
+  const API_URL = 'https://cabnm-backend.onrender.com';  // 🔁 Replace with your Render URL
   fetch(`${API_URL}/api/articles/${id}`, { method: 'DELETE' })
     .then(() => location.reload());
 }

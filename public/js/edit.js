@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const API_URL = 'https://your-backend-url.onrender.com';  // 🔁 Replace with your Render URL
+  const API_URL = 'https://cabnm-backend.onrender.com';  // 🔁 Replace with your Render URL
 
   // Get article ID from URL
   const id = window.location.pathname.split('/').pop();
