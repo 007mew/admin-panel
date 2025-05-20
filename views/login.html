@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - BNM & Co</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tagesschrift&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom color definition for easier use (important for Tailwind to recognize) */
+        .text-brand-blue { color: #0e2463; }
+        .bg-brand-blue { background-color: #0e2463; }
+        .hover\:bg-brand-blue:hover { background-color: #061544; } /* Darker shade */
+        .winky-rough-regular { font-family: 'Winky Rough', sans-serif; } /* Ensure font is applied */
+        .tagesschrift-regular { font-family: 'Tagesschrift', serif; }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 w-full max-w-md animate-fadeIn">
+        <h1 class="winky-rough-regular text-5xl text-brand-blue text-center mb-6">Admin Login</h1>
+        <form id="loginForm" class="space-y-4">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2 winky-rough-regular" for="username">
+                    Username
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline winky-rough-regular"
+                       id="username" type="text" placeholder="Username" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2 winky-rough-regular" for="password">
+                    Password
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline winky-rough-regular"
+                       id="password" type="password" placeholder="Password" required>
+            </div>
+            <button class="bg-brand-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full winky-rough-regular"
+                    type="submit">
+                Login
+            </button>
+        </form>
+        <div id="error" class="text-red-500 text-center mt-4"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/dashboard';  // Redirect to dashboard on successful login
+                } else {
+                    document.getElementById('error').innerText = 'Invalid username or password';
+                }
+            })
+            .catch(error => {
+                document.getElementById('error').innerText = 'An error occurred. Please try again.';
+            });
+        });
+    </script>
+</body>
+</html>
