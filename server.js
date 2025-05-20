@@ -7,6 +7,7 @@ const session = require('express-session');
 const path = require('path');
 const cors = require('cors');
 const Article = require('./models/Article');
+const authRouter = require('./routes/auth');  // adjust path if needed
 
 const app = express();
 
@@ -99,6 +100,10 @@ res.sendStatus(200);
 res.sendStatus(401);
 }
 });
+// Mount auth router here:
+
+app.use('/api/auth', authRouter);
+
 
 // ----- API Routes -----
 app.get('/api/articles', async (req, res) => {
